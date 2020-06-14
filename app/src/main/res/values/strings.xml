@@ -5,5 +5,8 @@
     <string name="countries">País</string>
     <string name="year">Ano</string>
     <string name="search">Buscar</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_favorites">Favorites</string>
 
 </resources>
