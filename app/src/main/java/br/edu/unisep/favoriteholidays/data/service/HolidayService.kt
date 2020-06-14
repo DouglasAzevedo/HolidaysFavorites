@@ -7,10 +7,10 @@ import retrofit2.http.Query
 
 interface HolidayService {
 
-    @GET(SERVICE_GET_PUBLIC_HOLIDAYS)
+    @GET(URL_BASE)
     suspend fun getHolidays(
         @Query("countrycode") countryCode: String,
-        year: String,
+        @Query("year") year: String,
         @Header(HEADER_RAPID_API_HOST) host: String = API_HOST,
         @Header(HEADER_RAPID_API_KEY) apiKey: String = API_KEY
     ): List<HolidayResponse>
