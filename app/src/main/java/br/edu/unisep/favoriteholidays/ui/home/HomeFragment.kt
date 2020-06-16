@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
                 adapter.setHolidays(listOf(result.result))
             }
         })
-        homeViewModel.getHolidays(textViewCountryCode.text.toString(), textViewYears.text.toString())
+        homeViewModel.getHolidays(editTextCountrie.text.toString(), editTextYear.text.toString())
         setupFavorite()
     }
 
