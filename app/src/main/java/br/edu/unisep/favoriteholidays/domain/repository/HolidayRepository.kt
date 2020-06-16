@@ -1,6 +1,5 @@
 package br.edu.unisep.favoriteholidays.domain.repository
 
-import br.edu.unisep.favoriteholidays.data.service.HolidayService
 import br.edu.unisep.favoriteholidays.data.service.factory.HolidayServiceFactory
 import br.edu.unisep.favoriteholidays.domain.base.ApiResult
 import br.edu.unisep.favoriteholidays.domain.dto.HolidayDto

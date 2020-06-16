@@ -1,13 +1,25 @@
 package br.edu.unisep.favoriteholidays.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import br.edu.unisep.favoriteholidays.domain.base.ApiResult
+import br.edu.unisep.favoriteholidays.domain.dto.HolidayDto
+import br.edu.unisep.favoriteholidays.domain.repository.HolidayRepository
+import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val repository = HolidayRepository()
+
+    val holidays = MutableLiveData<ApiResult<HolidayDto>> ()
+
+    fun getHolidays() {
+        viewModelScope.launch {
+            val result = repository.getHolidays(
+                "",""
+            )
+            holidays.postValue(result)
+        }
     }
-    val text: LiveData<String> = _text
 }
