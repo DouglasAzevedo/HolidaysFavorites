@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupFavorite() {
-        //db
+        //
     }
 
     private fun getHolidays() {
