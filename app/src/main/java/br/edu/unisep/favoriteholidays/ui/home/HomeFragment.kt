@@ -21,6 +21,7 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     private lateinit var adapter: HolidaysAdapter
+
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(HomeViewModel::class.java)
     }
@@ -34,15 +35,17 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupList()
-
         homeViewModel.holidays.observe(viewLifecycleOwner, Observer { result ->
-            if (result is ApiResult.Success) {
-                adapter.setHolidays(listOf(result.result))
+            when (result) {
+                is ApiResult.Success -> onHolidaysResult(result.result)
+                is ApiResult.Error -> onTotalsError()
             }
         })
-        homeViewModel.getHolidays(editTextCountrie.text.toString(), editTextYear.text.toString())
-        setupFavorite()
+
+        refreshHome.setOnRefreshListener { this.getHolidays() }
+
+        //setupList()
+
     }
 
     private fun setupList() {
@@ -62,12 +65,23 @@ class HomeFragment : Fragment() {
         //
     }
 
+    private fun getHolidays() {
+        progressBarTotals.visibility = View.VISIBLE
+        refreshHome.isRefreshing = false
+
+        homeViewModel.getHolidays(editTextCountrie.text.toString(), editTextYear.text.toString())
+    }
+
     private fun onHolidaysResult(holidays: HolidayDto) {
         val formatter = NumberFormat.getInstance(Locale("pt","BR"))
 
         textViewDate.text = formatter.format(holidays.date)
         textViewHolidayName.text = formatter.format(holidays.name)
         textViewCountryCode.text = formatter.format(holidays.countryCode)
+    }
+
+    private fun onTotalsError() {
+        progressBarTotals.visibility = View.INVISIBLE
     }
 
 }
