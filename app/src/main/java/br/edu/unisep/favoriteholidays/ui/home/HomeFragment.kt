@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import br.edu.unisep.favoriteholidays.R
 import br.edu.unisep.favoriteholidays.domain.base.ApiResult
 import br.edu.unisep.favoriteholidays.domain.dto.HolidayDto
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_holidays.*
 import java.text.NumberFormat
 import java.util.*
@@ -48,7 +49,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getHolidays() {
-        homeViewModel.getHolidays()
+        homeViewModel.getHolidays(editTextCountrie.text.toString(),editTextYear.text.toString())
     }
 
 

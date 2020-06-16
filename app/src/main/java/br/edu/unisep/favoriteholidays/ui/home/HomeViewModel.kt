@@ -12,12 +12,12 @@ class HomeViewModel : ViewModel() {
 
     private val repository = HolidayRepository()
 
-    val holidays = MutableLiveData<ApiResult<HolidayDto>> ()
+    val holidays = MutableLiveData<ApiResult<HolidayDto>>()
 
-    fun getHolidays() {
+    fun getHolidays(countryCode: String, year: String) {
         viewModelScope.launch {
             val result = repository.getHolidays(
-                "",""
+                countryCode, year
             )
             holidays.postValue(result)
         }
