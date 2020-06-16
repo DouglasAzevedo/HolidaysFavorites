@@ -30,6 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFavorite"
-        tools:listitem="@layout/activity_item_holidays" />
+        tools:listitem="@layout/item_holidays" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
