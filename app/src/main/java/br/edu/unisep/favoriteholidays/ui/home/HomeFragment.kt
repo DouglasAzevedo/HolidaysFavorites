@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import br.edu.unisep.favoriteholidays.R
 import br.edu.unisep.favoriteholidays.domain.base.ApiResult
 import br.edu.unisep.favoriteholidays.domain.dto.HolidayDto
+import kotlinx.android.synthetic.main.item_holidays.*
 import java.text.NumberFormat
 import java.util.*
 
@@ -36,12 +37,27 @@ class HomeFragment : Fragment() {
             }
         })
 
+        setupFavorite()
+
+        getHolidays()
+
     }
+
+    private fun setupFavorite() {
+        //db
+    }
+
+    private fun getHolidays() {
+        homeViewModel.getHolidays()
+    }
+
 
     private fun onHolidaysResult(holidays: HolidayDto) {
         val formatter = NumberFormat.getInstance(Locale("pt","BR"))
 
-
+        textViewDate.text = formatter.format(holidays.date)
+        textViewHolidayName.text = formatter.format(holidays.name)
+        textViewCountryCode.text = formatter.format(holidays.countryCode)
     }
 
 }
