@@ -9,18 +9,13 @@ class HolidayRepository {
 
     private val HolidayService = HolidayServiceFactory.getHolidayService()
 
-    suspend fun getHolidays(countryCode: String, year: String): ApiResult<HolidayDto> {
+    suspend fun getHolidays(countryCode: String, year: String): ApiResult<List<HolidayDto>> {
         return try {
             val response = HolidayService.getHolidays(countryCode, year)
-            val holidayResponse = response.first()
 
-            ApiResult.Success(
-                HolidayDto(
-                    holidayResponse.date,
-                    holidayResponse.name,
-                    holidayResponse.countryCode
-                )
-            )
+            ApiResult.Success(response.map { holiday ->
+                HolidayDto(holiday.date, holiday.name, holiday.countryCode)
+            })
         } catch (e: Exception) {
             ApiResult.Error()
         }

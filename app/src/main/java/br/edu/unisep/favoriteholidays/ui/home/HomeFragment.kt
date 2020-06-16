@@ -37,14 +37,12 @@ class HomeFragment : Fragment() {
 
         homeViewModel.holidays.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
-                is ApiResult.Success -> onHolidaysResult(result.result)
+                is ApiResult.Success -> adapter.setHolidays(result.result)
                 is ApiResult.Error -> onTotalsError()
             }
         })
 
-        refreshHome.setOnRefreshListener { this.getHolidays() }
-
-        //setupList()
+        buttonSearch.setOnClickListener { this.getHolidays() }
 
     }
 
@@ -70,6 +68,7 @@ class HomeFragment : Fragment() {
         refreshHome.isRefreshing = false
 
         homeViewModel.getHolidays(editTextCountrie.text.toString(), editTextYear.text.toString())
+        setupList()
     }
 
     private fun onHolidaysResult(holidays: HolidayDto) {

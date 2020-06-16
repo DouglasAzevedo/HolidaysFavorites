@@ -8,11 +8,13 @@ import br.edu.unisep.favoriteholidays.domain.dto.HolidayDto
 import br.edu.unisep.favoriteholidays.domain.repository.HolidayRepository
 import kotlinx.coroutines.launch
 
+typealias ApiResultHolidays = ApiResult<List<HolidayDto>>
+
 class HomeViewModel : ViewModel() {
 
     private val repository = HolidayRepository()
 
-    val holidays = MutableLiveData<ApiResult<HolidayDto>>()
+    val holidays = MutableLiveData<ApiResultHolidays>()
 
     fun getHolidays(countryCode: String, year: String) {
         viewModelScope.launch {
