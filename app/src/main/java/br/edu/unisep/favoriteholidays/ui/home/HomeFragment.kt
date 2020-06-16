@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.unisep.favoriteholidays.R
 import br.edu.unisep.favoriteholidays.domain.base.ApiResult
 import br.edu.unisep.favoriteholidays.domain.dto.HolidayDto
+import br.edu.unisep.favoriteholidays.ui.home.adapter.HolidaysAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_holidays.*
 import java.text.NumberFormat
@@ -19,6 +20,7 @@ import java.util.*
 
 class HomeFragment : Fragment() {
 
+    private lateinit var adapter: HolidaysAdapter
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(HomeViewModel::class.java)
     }
@@ -32,26 +34,33 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupList()
+
         homeViewModel.holidays.observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is ApiResult.Success -> onHolidaysResult(result.result)
+            if (result is ApiResult.Success) {
+                adapter.setHolidays(listOf(result.result))
             }
         })
-
+        homeViewModel.getHolidays(textViewCountryCode.text.toString(), textViewYears.text.toString())
         setupFavorite()
+    }
 
-        getHolidays()
+    private fun setupList() {
+        listHolidays.adapter = adapter
 
+        listHolidays.layoutManager = LinearLayoutManager(
+            context, LinearLayoutManager.VERTICAL, false
+        )
+        listHolidays.addItemDecoration(
+            DividerItemDecoration(
+                context, DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     private fun setupFavorite() {
         //
     }
-
-    private fun getHolidays() {
-        homeViewModel.getHolidays(editTextCountrie.text.toString(),editTextYear.text.toString())
-    }
-
 
     private fun onHolidaysResult(holidays: HolidayDto) {
         val formatter = NumberFormat.getInstance(Locale("pt","BR"))

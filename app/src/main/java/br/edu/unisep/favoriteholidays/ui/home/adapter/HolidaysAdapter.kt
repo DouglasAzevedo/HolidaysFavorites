@@ -26,5 +26,10 @@ class HolidaysAdapter : RecyclerView.Adapter<HolidaysAdapter.HolidaysViewHolder>
         holder.itemView.textViewHolidayName.text = holiday.name
     }
 
+    fun setHolidays(holidays: List<HolidayDto>) {
+        this.holidays = holidays
+        notifyDataSetChanged()
+    }
+
     class HolidaysViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

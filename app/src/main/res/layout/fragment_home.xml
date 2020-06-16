@@ -78,6 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextCountrie" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listHolidays"
         android:layout_width="409dp"
         android:layout_height="569dp"
         android:layout_marginTop="16dp"
