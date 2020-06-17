@@ -20,7 +20,7 @@ import java.util.*
 
 class HomeFragment : Fragment() {
 
-    private lateinit var adapter: HolidaysAdapter
+    private var adapter = HolidaysAdapter()
 
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(HomeViewModel::class.java)
@@ -35,14 +35,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        buttonSearch.setOnClickListener { this.getHolidays() }
+
         homeViewModel.holidays.observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is ApiResult.Success -> adapter.setHolidays(result.result)
-                is ApiResult.Error -> onTotalsError()
+            if (result is ApiResult.Success) {
+                adapter.setHolidays(result.result)
             }
         })
-
-        buttonSearch.setOnClickListener { this.getHolidays() }
 
     }
 
@@ -69,18 +68,6 @@ class HomeFragment : Fragment() {
 
         homeViewModel.getHolidays(editTextCountrie.text.toString(), editTextYear.text.toString())
         setupList()
-    }
-
-    private fun onHolidaysResult(holidays: HolidayDto) {
-        val formatter = NumberFormat.getInstance(Locale("pt","BR"))
-
-        textViewDate.text = formatter.format(holidays.date)
-        textViewHolidayName.text = formatter.format(holidays.name)
-        textViewCountryCode.text = formatter.format(holidays.countryCode)
-    }
-
-    private fun onTotalsError() {
-        progressBarTotals.visibility = View.INVISIBLE
     }
 
 }
