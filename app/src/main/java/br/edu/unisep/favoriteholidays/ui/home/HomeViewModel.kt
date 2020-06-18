@@ -16,10 +16,10 @@ class HomeViewModel : ViewModel() {
 
     val holidays = MutableLiveData<ApiResultHolidays>()
 
-    fun getHolidays(countryCode: String, year: String) {
+    fun getHolidays(year: String, countryCode: String) {
         viewModelScope.launch {
             val result = repository.getHolidays(
-                countryCode, year
+                year, countryCode
             )
             holidays.postValue(result)
         }

@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
         progressBarTotals.visibility = View.VISIBLE
         refreshHome.isRefreshing = false
 
-        homeViewModel.getHolidays(editTextCountrie.text.toString(), editTextYear.text.toString())
+        homeViewModel.getHolidays(editTextYear.text.toString(), editTextCountrie.text.toString())
         setupList()
     }
 

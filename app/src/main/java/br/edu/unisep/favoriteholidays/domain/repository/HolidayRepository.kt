@@ -9,13 +9,14 @@ class HolidayRepository {
 
     private val HolidayService = HolidayServiceFactory.getHolidayService()
 
-    suspend fun getHolidays(countryCode: String, year: String): ApiResult<List<HolidayDto>> {
+    suspend fun getHolidays(year: String, countryCode: String): ApiResult<List<HolidayDto>> {
         return try {
-            val response = HolidayService.getHolidays(countryCode, year)
+            val response = HolidayService.getHolidays(year, countryCode)
 
             ApiResult.Success(response.map { holiday ->
                 HolidayDto(holiday.date, holiday.name, holiday.countryCode)
             })
+
         } catch (e: Exception) {
             ApiResult.Error()
         }
