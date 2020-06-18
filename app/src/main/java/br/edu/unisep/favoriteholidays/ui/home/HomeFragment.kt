@@ -40,8 +40,7 @@ class HomeFragment : Fragment() {
         homeViewModel.holidays.observe(viewLifecycleOwner, Observer { result ->
             if (result is ApiResult.Success) {
                 adapter.setHolidays(result.result)
-            } else {
-                onTotalsError()
+                progressBarTotals.visibility = View.INVISIBLE
             }
         })
 
@@ -70,10 +69,6 @@ class HomeFragment : Fragment() {
 
         homeViewModel.getHolidays(editTextYear.text.toString(), editTextCountrie.text.toString())
         setupList()
-    }
-
-    private fun onTotalsError() {
-        progressBarTotals.visibility = View.INVISIBLE
     }
 
 }
