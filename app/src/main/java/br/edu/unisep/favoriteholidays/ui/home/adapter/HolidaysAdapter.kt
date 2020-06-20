@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.unisep.favoriteholidays.R
+import br.edu.unisep.favoriteholidays.data.dao.HolidayDao
 import br.edu.unisep.favoriteholidays.domain.dto.HolidayDto
 import kotlinx.android.synthetic.main.item_holidays.view.*
 
@@ -24,6 +25,16 @@ class HolidaysAdapter : RecyclerView.Adapter<HolidaysAdapter.HolidaysViewHolder>
         holder.itemView.textViewDate.text = holiday.date
         holder.itemView.textViewCountryCode.text = holiday.countryCode
         holder.itemView.textViewHolidayName.text = holiday.name
+
+        holder.itemView.imageViewFavorite.setOnClickListener { icon ->
+            if (icon.isSelected) {
+                //
+            } else {
+                //@Save
+            }
+            icon.isSelected = !icon.isSelected
+            notifyDataSetChanged()
+        }
     }
 
     fun setHolidays(holidays: List<HolidayDto>) {
